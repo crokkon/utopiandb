@@ -1,0 +1,24 @@
+<div class="contribution">
+    <span class="meta" >
+        <small class="float-left">
+            <a href="{{add_to_request('type', type)}}">{{type}}</a> |
+            <a href="{{add_to_request('author', author)}}">@{{author}}</a> |
+            <a href="{{add_to_request('repo', repo)}}">{{repo}}</a> |
+            <a href="https://github.com/{{repo}}"><i class="fab fa-github"></i></a>
+        </small>
+        <small class="float-right">{{timestamp}}</small>
+    </span>
+    <div class="clearfix"></div>
+    <div class="title">
+        {% if voted %}
+        <a href="{{add_to_request('voted', 'True')}}">
+            <i class="fas fa-chevron-circle-up" style="color:green"></i>
+        </a>
+        {% else %}
+        <a href="{{add_to_request('voted', 'False')}}">
+            <i class="fas fa-square" style="color:lightgrey"></i>
+        </a>
+        {% endif %}
+        <a href="https://steemit.com/@{{author}}/{{permlink}}">{{title}}</a>
+    </div>
+</div>
