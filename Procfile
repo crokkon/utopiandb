@@ -1,0 +1,1 @@
+web: gunicorn utopiandb.app:app
