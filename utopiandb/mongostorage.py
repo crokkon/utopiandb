@@ -1,6 +1,4 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import pymongo
 from pymongo.errors import ConnectionFailure
 import os
@@ -11,7 +9,9 @@ MONGO_USER = os.getenv('MONGO_USER', '')
 MONGO_PASSWD = os.getenv('MONGO_PASSWD', '')
 MONGO_DB = os.getenv('MONGO_DB', 'utopian')
 
+
 class MongoStorage(object):
+
     def __init__(self, db_name=MONGO_DB, host=MONGO_HOST,
                  port=MONGO_PORT, user=MONGO_USER,
                  passwd=MONGO_PASSWD):
@@ -48,7 +48,3 @@ class MongoStorage(object):
         self.Posts.create_index([('author', 1), ('permlink', 1)], unique=True)
         self.Posts.create_index([('author', 1)])
         self.Posts.create_index([('created', -1)])
-
-
-if __name__ == '__main__':
-    mongo = MongoStorage()

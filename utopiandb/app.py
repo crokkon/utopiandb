@@ -1,18 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request
-import os
 import math
 from .mongostorage import MongoStorage
-from .config import ENTRIES_PER_PAGE
+from .config import ENTRIES_PER_PAGE, DEBUG
 
 app = Flask(__name__)
 m = MongoStorage()
 
+
 @app.context_processor
 def my_utility_processor():
+
     def add_to_request(key, value):
-        baseurl =  request.path+"?"
+        baseurl = request.path + "?"
         for arg in request.args:
             if arg == key:
                 baseurl += "&%s=%s" % (key, value)
@@ -23,7 +24,7 @@ def my_utility_processor():
         return baseurl
 
     def remove_from_request(key):
-        baseurl =  request.path+"?"
+        baseurl = request.path + "?"
         for arg in request.args:
             if arg == key:
                 continue
@@ -34,14 +35,15 @@ def my_utility_processor():
     return dict(add_to_request=add_to_request,
                 remove_from_request=remove_from_request)
 
+
 @app.route('/')
 def index():
-    page = request.args.get('page', default = 1, type = int)
-    contrib_type = request.args.get('type', default = None, type = str)
-    contrib_repo = request.args.get('repo', default = None, type = str)
-    contrib_author = request.args.get('author', default = None, type = str)
-    contrib_voted = request.args.get('voted', default = None, type = str)
-    contrib_title = request.args.get('title', default = None, type= str)
+    page = request.args.get('page', default=1, type=int)
+    contrib_type = request.args.get('type', default=None, type=str)
+    contrib_repo = request.args.get('repo', default=None, type=str)
+    contrib_author = request.args.get('author', default=None, type=str)
+    contrib_voted = request.args.get('voted', default=None, type=str)
+    contrib_title = request.args.get('title', default=None, type=str)
 
     conditions = {}
     if contrib_type:
@@ -62,7 +64,7 @@ def index():
     pages = math.ceil(contrib_count / ENTRIES_PER_PAGE)
     start = ENTRIES_PER_PAGE * (page - 1)
     results = m.Posts.find(conditions, limit=ENTRIES_PER_PAGE,
-                          skip=start, sort=[('created', -1)])
+                           skip=start, sort=[('created', -1)])
 
     content = "<table>"
     for post in results:
@@ -73,5 +75,6 @@ def index():
     return render_template('index.html', content=content,
                            total_pages=pages, page=page)
 
+
 if __name__ == '__main__':
-    app.run(debug=config.DEBUG, use_reloader=True)
+    app.run(debug=DEBUG, use_reloader=True)
