@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
+
+<!-- query results -->
 {% autoescape false %}
 {{content}}
+{% endautoescape %}
 
 <!-- pagination -->
 <div class="row">
@@ -32,5 +35,4 @@
     </div>
 </div>
 
-{% endautoescape %}
 {% endblock %}
