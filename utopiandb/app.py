@@ -61,18 +61,13 @@ def index():
     contrib_count = m.Posts.count(conditions)
     pages = math.ceil(contrib_count / ENTRIES_PER_PAGE)
     start = ENTRIES_PER_PAGE * (page - 1)
-    latest = m.Posts.find(conditions, limit=ENTRIES_PER_PAGE,
+    results = m.Posts.find(conditions, limit=ENTRIES_PER_PAGE,
                           skip=start, sort=[('created', -1)])
 
     content = "<table>"
-    for row in latest:
-        content += render_template("contribution.html",
-                                   timestamp=row['created'],
-                                   type=row['type'], repo=row['repo'],
-                                   title= row['title'],
-                                   author=row['author'],
-                                   permlink=row['permlink'],
-                                   voted=row['voted'])
+    for post in results:
+        content += render_template("contribution.html", post=post)
+
     content += "</table>"
 
     return render_template('index.html', content=content,
