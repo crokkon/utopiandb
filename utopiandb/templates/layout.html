@@ -18,11 +18,10 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    {% for key in conditions %}
-                    <span class="badge badge-pill badge-primary">{{key}}: {{conditions[key]}}
+                    {% for key in request.args %}
+                    <span class="badge badge-pill badge-primary">{{key}}: {{request.args[key]}}
                         <a href="{{remove_from_request(key)}}">
-                            <i class="fas fa-times-circle" style="color:black"></i>
-                            <!-- <img src="{{url_for('static', filename='img/glyphicons-193-remove-sign.png')}}" width="16"> -->
+                            <i class="fas fa-times-circle" style="color:black" title="Remove filter"></i>
                         </a>
                     </span>
                     {% endfor %}

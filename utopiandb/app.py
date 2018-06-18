@@ -41,12 +41,7 @@ def index():
     contrib_repo = request.args.get('repo', default = None, type = str)
     contrib_author = request.args.get('author', default = None, type = str)
     contrib_voted = request.args.get('voted', default = None, type = str)
-
-    baseurl = request.path+"?"
-    for arg in request.args:
-        baseurl += "&%s=%s" % (arg, request.args[arg])
-
-    print(baseurl)
+    contrib_title = request.args.get('title', default = None, type= str)
 
     conditions = {}
     if contrib_type:
@@ -60,6 +55,8 @@ def index():
             conditions['voted'] = True
         else:
             conditions['voted'] = False
+    if contrib_title:
+        conditions['title'] = {"$regex": "(?i)%s" % (contrib_title)}
 
     contrib_count = m.Posts.count(conditions)
     pages = math.ceil(contrib_count / ENTRIES_PER_PAGE)
@@ -79,8 +76,7 @@ def index():
     content += "</table>"
 
     return render_template('index.html', content=content,
-                           total_pages=pages, page=page,
-                           conditions=conditions, baseurl=baseurl)
+                           total_pages=pages, page=page)
 
 if __name__ == '__main__':
     app.run(debug=config.DEBUG, use_reloader=True)

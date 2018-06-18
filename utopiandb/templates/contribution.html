@@ -1,10 +1,10 @@
 <div class="contribution">
     <span class="meta" >
         <small class="float-left">
-            <a href="{{add_to_request('type', type)}}">{{type}}</a> |
-            <a href="{{add_to_request('author', author)}}">@{{author}}</a> |
-            <a href="{{add_to_request('repo', repo)}}">{{repo}}</a> |
-            <a href="https://github.com/{{repo}}"><i class="fab fa-github"></i></a>
+            <a href="{{add_to_request('type', type)}}" title="Show only {{type}} contributions">{{type}}</a> |
+            <a href="{{add_to_request('author', author)}}" tile="Show only contributions from @{{author}}">@{{author}}</a> |
+            <a href="{{add_to_request('repo', repo)}}" title="Show only contributions from {{repo}}">{{repo}}</a> |
+            <a href="https://github.com/{{repo}}" title="View GitHub repository"><i class="fab fa-github"></i></a>
         </small>
         <small class="float-right">{{timestamp}}</small>
     </span>
@@ -12,11 +12,13 @@
     <div class="title">
         {% if voted %}
         <a href="{{add_to_request('voted', 'True')}}">
-            <i class="fas fa-chevron-circle-up" style="color:green"></i>
+            <i class="fas fa-chevron-circle-up" style="color:green"
+            title="Show only contributions voted by @utopian-io"></i>
         </a>
         {% else %}
         <a href="{{add_to_request('voted', 'False')}}">
-            <i class="fas fa-square" style="color:lightgrey"></i>
+            <i class="fas fa-square" style="color:lightgrey"
+            title="Show only contributions not voted by @utopian-io"></i>
         </a>
         {% endif %}
         <a href="https://steemit.com/@{{author}}/{{permlink}}">{{title}}</a>
